@@ -2,17 +2,10 @@
 
 A sleek and interactive dashboard to visualize **Codeforces user statistics** using the [Codeforces API](https://codeforces.com/api). Built entirely with **HTML, CSS, and JavaScript**, and powered by **Chart.js** for dynamic visualizations.
 
-> 🔗 **Live Demo:** [https://your-username.github.io/codeforces-stats-dashboard](https://your-username.github.io/codeforces-stats-dashboard)
+
 
 ---
 
-## 📸 Screenshots
-
-| Landing Page | Stats Dashboard | Analysis Panel |
-|--------------|------------------|----------------|
-| ![Landing](assets/demo-landing.png) | ![Stats](assets/demo-stats.png) | ![Analysis](assets/demo-analysis.png) |
-
----
 
 ## 🔥 Features
 
