@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codeforces Statistics Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="page-container">
+        <div class="container">
+            <div class="landing-hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Codeforces Statistics Dashboard</h1>
+                    <p class="hero-subtitle">Get comprehensive analytics and insights for any Codeforces user</p>
+                    
+                    <div class="search-section">
+                        <div class="form-group">
+                            <label for="username-input" class="form-label">Enter Codeforces Username</label>
+                            <input 
+                                type="text" 
+                                id="username-input" 
+                                class="form-control username-input" 
+                                placeholder="e.g. tourist"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <button id="get-stats-btn" class="btn btn--primary btn--lg btn--full-width">
+                            Get Stats
+                        </button>
+                        <div id="landing-error" class="error-message hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Page -->
+    <div id="stats-page" class="page-container hidden">
+        <div class="container">
+            <!-- Header -->
+            <div class="stats-header">
+                <button id="back-btn" class="btn btn--outline">← Back to Search</button>
+                <h2 id="stats-title" class="stats-title">Statistics Dashboard</h2>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading-state" class="loading-container hidden">
+                <div class="loading-spinner"></div>
+                <h2>“Anyone can write code that a computer can understand. Good programmers write code that humans can understand.”</h2>
+            </div>
+
+            <!-- Error State -->
+            <div id="error-state" class="error-container hidden">
+                <div class="error-content">
+                    <h3></h3>
+                    <p id="error-message"></p>
+                    <button id="retry-btn" class="btn btn--primary">Try Again</button>
+                </div>
+            </div>
+
+            <!-- Stats Content -->
+            <div id="stats-content" class="stats-content hidden">
+                <!-- User Profile Card -->
+                <div class="card profile-card">
+                    <div class="card__body">
+                        <div class="profile-info">
+                            <div class="profile-avatar">
+                                <div class="avatar-placeholder" id="user-avatar"></div>
+                            </div>
+                            <div class="profile-details">
+                                <h3 id="user-handle" class="profile-name"></h3>
+                                <div class="profile-stats">
+                                    <div class="stat-item">
+                                        <span class="stat-label">Rating</span>
+                                        <span id="user-rating" class="stat-value rating-badge" style="color:white;background-color:black;"></span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Max Rating</span>
+                                        <span id="user-max-rating" class="stat-value"></span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Rank</span>
+                                        <span id="user-rank" class="stat-value"></span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Country</span>
+                                        <span id="user-country" class="stat-value"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="charts-grid">
+                    <!-- Rating History Chart -->
+                    <div class="card chart-card">
+                        <div class="card__body">
+                            <h4 class="chart-title">Rating History</h4>
+                            <div class="chart-container">
+                                <canvas id="rating-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem Difficulty Distribution -->
+                    <div class="card chart-card">
+                        <div class="card__body">
+                            <h4 class="chart-title">Problem Difficulty Distribution</h4>
+                            <div class="chart-container">
+                                <canvas id="difficulty-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submission Verdicts -->
+                    <div class="card chart-card">
+                        <div class="card__body">
+                            <h4 class="chart-title">Submission Verdicts</h4>
+                            <div class="chart-container">
+                                <canvas id="verdict-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Algorithmic Topics -->
+                    <div class="card chart-card full-width">
+                        <div class="card__body">
+                            <h4 class="chart-title">Algorithmic Proficiency</h4>
+                            <div class="chart-container">
+                                <canvas id="topics-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analysis Section -->
+                <div class="analysis-section">
+                    <div class="card">
+                        <div class="card__body">
+                            <h4>Performance Analysis</h4>
+                            <button id="get-analysis-btn" class="btn btn--primary">
+                                <span class="btn-text">Get Analysis</span>
+                                <span class="btn-loading hidden">Loading...</span>
+                            </button>
+                            <div id="analysis-content" class="analysis-content hidden">
+                                <div class="analysis-stats">
+                                    <div class="analysis-item">
+                                        <span class="analysis-label">Success Rate</span>
+                                        <span id="success-rate" class="analysis-value"></span>
+                                    </div>
+                                    <div class="analysis-item">
+                                        <span class="analysis-label">Average Rating</span>
+                                        <span id="avg-rating" class="analysis-value"></span>
+                                    </div>
+                                    <div class="analysis-item">
+                                        <span class="analysis-label">Contest Participation</span>
+                                        <span id="contest-count" class="analysis-value"></span>
+                                    </div>
+                                    <div class="analysis-item">
+                                        <span class="analysis-label">Total Submissions</span>
+                                        <span id="total-submissions" class="analysis-value"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
